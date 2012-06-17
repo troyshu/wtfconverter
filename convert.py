@@ -42,7 +42,7 @@ class MainPage(webapp2.RequestHandler):
             url_linktext = 'Login' 
 
         template_values = {
-            
+            'pastConversions': pastConversions,
             'url': url,
             'url_linktext': url_linktext,
         }
