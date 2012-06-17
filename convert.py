@@ -22,9 +22,9 @@ class PastConversion(db.Model):
   date = db.DateTimeProperty(auto_now_add=True)
 
 
-def guestbook_key(guestbook_name=None):
-  """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
-  return db.Key.from_path('Guestbook', guestbook_name or 'default_guestbook')
+def pastConversions_key():
+  """Constructs a Datastore key for a PastConversions entity with guestbook_name."""
+  return db.Key.from_path('PastConversions')
 
 
 class MainPage(webapp2.RequestHandler):
