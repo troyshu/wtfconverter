@@ -13,11 +13,13 @@ jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 	
 
-'''class Greeting(db.Model):
+class PastConversion(db.Model):
   """Models an individual Guestbook entry with an author, content, and date."""
-  author = db.UserProperty()
-  content = db.StringProperty(multiline=True)
-  date = db.DateTimeProperty(auto_now_add=True)'''
+  user = db.UserProperty()
+  fromUnit = db.StringProperty()
+  toUnit = db.StringProperty()
+  value = db.FloatProperty()
+  date = db.DateTimeProperty(auto_now_add=True)
 
 
 def guestbook_key(guestbook_name=None):
