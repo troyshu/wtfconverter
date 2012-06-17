@@ -24,15 +24,15 @@ class PastConversion(db.Model):
 
 def pastConversions_key():
   """Constructs a Datastore key for a PastConversions entity with guestbook_name."""
-  return db.Key.from_path('PastConversions')
+  return db.Key.from_path('PastConversions','default_pastConversions')
 
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        '''guestbook_name=self.request.get('guestbook_name')
-        greetings_query = Greeting.all().ancestor(
-            guestbook_key(guestbook_name)).order('date')
-        greetings = greetings_query.fetch(10)'''
+        '''guestbook_name=self.request.get('guestbook_name')'''
+        query = PastConversion.all().ancestor(
+            pastConversions_key()).order('date')
+        pastConversions = query.fetch(10)
 
         if users.get_current_user():
             url = users.create_logout_url(self.request.uri)
