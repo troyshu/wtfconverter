@@ -30,9 +30,9 @@ def pastConversions_key():
 class MainPage(webapp2.RequestHandler):
     def get(self):
         '''guestbook_name=self.request.get('guestbook_name')'''
-        query = PastConversion.all().ancestor(
+        '''query = PastConversion.all().ancestor(
             pastConversions_key()).order('date')
-        pastConversions = query.fetch(10)
+        pastConversions = query.fetch(10)'''
 
         if users.get_current_user():
             url = users.create_logout_url(self.request.uri)
@@ -42,7 +42,7 @@ class MainPage(webapp2.RequestHandler):
             url_linktext = 'Login' 
 
         template_values = {
-            'pastConversions': pastConversions,
+            #'pastConversions': pastConversions,
             'url': url,
             'url_linktext': url_linktext,
         }
@@ -51,27 +51,32 @@ class MainPage(webapp2.RequestHandler):
         self.response.out.write(template.render(template_values))
 
 class Converter(webapp2.RequestHandler):
-  def post(self):
-    # We set the same parent key on the 'Greeting' to ensure each greeting is in
-    # the same entity group. Queries across the single entity group will be
-    # consistent. However, the write rate to a single entity group should
-    # be limited to ~1/second.
+	def post(self):
+		
+		#write conversion to database? could be useful for eventual statistics. eg number of conversions per user/visit, most popular units, etc.
+		
+		# We set the same parent key on the 'Greeting' to ensure each greeting is in
+		# the same entity group. Queries across the single entity group will be
+		# consistent. However, the write rate to a single entity group should
+		# be limited to ~1/second.
+		
+		number = float(cgi.escape(self.request.get('number')))
+		
+		#TODO: add checker to make sure nothing but floats entered.
+		
+		conversion = PastConversion(parent=pastConversions_key())
+		if users.get_current_user():
+			conversion.user = users.get_current_user()
+			
+		conversion.fromUnit = 'seconds'
+		conversion.toUnit = 'cesium'
+		conversion.value = number
+		conversion.put()
+		
+		
+		self.redirect('/?' + urllib.urlencode({'number': number}))
 	
-	'''guestbook_name = self.request.get('guestbook_name')
-    greeting = Greeting(parent=guestbook_key(guestbook_name))
-
-    if users.get_current_user():
-      greeting.author = users.get_current_user()
-
-    greeting.content = self.request.get('content')
-    greeting.put()
-    self.redirect('/?' + urllib.urlencode({'guestbook_name': guestbook_name}))'''
 	
-	number = self.request.get('number')
-	
-	#write conversion to database? could be useful for eventual statistics. eg number of conversions per user/visit, most popular units, etc.
-
-
 app = webapp2.WSGIApplication([('/', MainPage),
                                ('/convert', Converter)],
                               debug=True)
