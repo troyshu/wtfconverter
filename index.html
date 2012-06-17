@@ -3,19 +3,11 @@
     <link type="text/css" rel="stylesheet" href="/css/main.css" />
   </head>
   <body>
-    {% for greeting in greetings %}
-      {% if greeting.author %}
-        <b>{{ greeting.author.nickname() }}</b> wrote on {{ greeting.date }}:
-      {% else %}
-        An anonymous person wrote:
-      {% endif %}
-      <blockquote>{{ greeting.content|escape }}</blockquote>
-    {% endfor %}
-
-    <form action="/sign" method="post">
-      <div><textarea name="content" rows="3" cols="60"></textarea></div>
-      <div><input type="submit" value="Sign Guestbook"></div>
-    </form>
+	
+	<form action="/convert" method "post">
+		<input type="text" name="number" /> gallons to butt loads<br/>
+		<input type="submit" value="Convert" />
+	</form>
 
     <a href="{{ url }}">{{ url_linktext }}</a>
 

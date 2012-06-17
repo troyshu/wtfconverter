@@ -1,15 +1,15 @@
-application: helloworld
+application: wtfconverter
 version: 1
 runtime: python27
 api_version: 1
 threadsafe: true
 
 handlers:
-- url: /stylesheets
-  static_dir: stylesheets
+- url: /css
+  static_dir: css
 
 - url: /.*
-  script: helloworld.app
+  script: convert.app
 
 libraries:
 - name: jinja2
