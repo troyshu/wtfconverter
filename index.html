@@ -3,12 +3,27 @@
     <link type="text/css" rel="stylesheet" href="/css/main.css" />
   </head>
   <body>
+	<!-- <a href="{{ url }}">{{ url_linktext }}</a> -->
+	
 	<form action="/convert" method="post">
 		<input type="text" name="number" > seconds to transitions of a cesium-133 atom<br>
 		<input type="submit" value="Convert" >
 	</form>
+	<div id="recentConversions">
+	Recent conversions:<br>
+	
+	{% for pastConversion in pastConversions %}
+	  {{ pastConversion.value }} {{pastConversion.fromUnit }} to {{pastConversion.toUnit}}
+      {% if pastConversion.user %}
+        <b>by {{ pastConversion.user.nickname() }}</b>
+      {% else %}
+        by someone
+      {% endif %}
+	  <br>
+    {% endfor %}
+	</div>
 
-    <a href="{{ url }}">{{ url_linktext }}</a>
+    
 
   </body>
 </html>

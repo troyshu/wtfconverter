@@ -30,9 +30,9 @@ def pastConversions_key():
 class MainPage(webapp2.RequestHandler):
     def get(self):
         '''guestbook_name=self.request.get('guestbook_name')'''
-        '''query = PastConversion.all().ancestor(
-            pastConversions_key()).order('date')
-        pastConversions = query.fetch(10)'''
+        query = PastConversion.all().ancestor(
+            pastConversions_key()).order('-date')
+        pastConversions = query.fetch(10)
 
         if users.get_current_user():
             url = users.create_logout_url(self.request.uri)
@@ -42,7 +42,7 @@ class MainPage(webapp2.RequestHandler):
             url_linktext = 'Login' 
 
         template_values = {
-            #'pastConversions': pastConversions,
+            'pastConversions': pastConversions,
             'url': url,
             'url_linktext': url_linktext,
         }
@@ -67,14 +67,17 @@ class Converter(webapp2.RequestHandler):
 		conversion = PastConversion(parent=pastConversions_key())
 		if users.get_current_user():
 			conversion.user = users.get_current_user()
-			
-		conversion.fromUnit = 'seconds'
-		conversion.toUnit = 'cesium'
+		
+		fromUnit = 'seconds'
+		toUnit = 'cesium' #place holders, until there are more unit choices
+		
+		conversion.fromUnit = fromUnit
+		conversion.toUnit = toUnit
 		conversion.value = number
 		conversion.put()
 		
 		
-		self.redirect('/?' + urllib.urlencode({'number': number}))
+		self.redirect('/?' + urllib.urlencode({'number': number,'from_unit':fromUnit, 'to_unit':toUnit}))
 	
 	
 app = webapp2.WSGIApplication([('/', MainPage),

@@ -14,3 +14,9 @@ indexes:
   ancestor: yes
   properties:
   - name: date
+
+- kind: PastConversion
+  ancestor: yes
+  properties:
+  - name: date
+    direction: desc
