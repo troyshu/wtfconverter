@@ -18,8 +18,8 @@
 	
 	<form action="/convert" method="post">
 		<input type="text" name="number" id="input" value="{{ number }}">
-		<select data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;" tabindex="1">
-          <option value=""></option> 
+		<select name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
+          <option value="{{fromUnit}}">{{fromUnit}}</option> 
 		{% for fromUnit in fromUnitSet: %}
 		  
           <option value="{{fromUnit}}">{{fromUnit}}</option> 

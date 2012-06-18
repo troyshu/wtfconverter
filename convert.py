@@ -92,14 +92,14 @@ class Converter(webapp2.RequestHandler):
 		# be limited to ~1/second.
 		
 		number = float(cgi.escape(self.request.get('number')))
-		
 		#TODO: add checker to make sure nothing but floats entered.
+		fromUnit = cgi.escape(self.request.get('fromUnit'))
 		
 		conversion = PastConversion(parent=pastConversions_key())
 		if users.get_current_user():
 			conversion.user = users.get_current_user()
 		
-		fromUnit = 'seconds'
+		#fromUnit = 'seconds'
 		toUnit = 'cesium' #place holders, until there are more unit choices
 		
 		conversion.fromUnit = fromUnit
