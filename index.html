@@ -5,23 +5,26 @@
   <body>
 	<!-- <a href="{{ url }}">{{ url_linktext }}</a> -->
 	
+	<div id="answer">
+		{% if value: %}
+		{{ value }} transitions of a cesium-133 atom
+		{% endif %}
+	</div>
+	
+	
 	<form action="/convert" method="post">
-		<input type="text" name="number" > seconds to transitions of a cesium-133 atom<br>
-		<input type="submit" value="Convert" >
+		<input type="text" name="number" id="input" value="{{ number }}"> seconds<br>
+		<input type="submit" value="Convert it dude" id="button">
 	</form>
-	<div id="recentConversions">
+	
+	<!--<div id="recentConversions">
 	Recent conversions:<br>
 	
 	{% for pastConversion in pastConversions %}
 	  {{ pastConversion.value }} {{pastConversion.fromUnit }} to {{pastConversion.toUnit}}
-      {% if pastConversion.user %}
-        <b>by {{ pastConversion.user.nickname() }}</b>
-      {% else %}
-        by someone
-      {% endif %}
 	  <br>
     {% endfor %}
-	</div>
+	</div>-->
 
     
 

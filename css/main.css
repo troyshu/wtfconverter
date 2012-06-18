@@ -1,4 +1,25 @@
 body {
-  font-family: Verdana, Helvetica, sans-serif;
-  background-color: #DDDDDD;
+  font-family: Arial, Verdana, sans-serif;
+  background-color: white;
+  color:#444444;
+  font-size:80px;
+  text-align:center;
+}
+input#input {
+	color:#666666;
+	font-size:80px;
+	width:300px
+}
+input#button {
+	margin-top:30px;
+	color:black;
+	font-size:60px;
+}
+#answer {
+	margin-bottom:30px;
+	color:#333333;
+}
+
+#recentConversions {
+	font-size:0.15em;
 }

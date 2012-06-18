@@ -9,6 +9,9 @@ from google.appengine.api import users
 import jinja2
 import os
 
+#custom
+from admin import *
+
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 	
@@ -28,33 +31,40 @@ def pastConversions_key():
 
 
 class MainPage(webapp2.RequestHandler):
-    def get(self):
-        '''guestbook_name=self.request.get('guestbook_name')'''
-        query = PastConversion.all().ancestor(
-            pastConversions_key()).order('-date')
-        pastConversions = query.fetch(10)
-
-        if users.get_current_user():
-            url = users.create_logout_url(self.request.uri)
-            url_linktext = 'Logout'
-        else:
-            url = users.create_login_url(self.request.uri)
-            url_linktext = 'Login' 
+	def get(self):
+		query = PastConversion.all().ancestor(pastConversions_key()).order('-date')
+		pastConversions = query.fetch(10)
 		
-		#process GET vars to do actual conversion
+		if users.get_current_user():
+			url = users.create_logout_url(self.request.uri)
+			url_linktext='Logout'
+		else:
+			url=users.create_login_url(self.request.uri)
+			url_linktext='Login'
+			
 		#get relevant GET vars
-		#lookup conversion factor in table
-		#use conversion factor to convert, display to user
+		number = cgi.escape(self.request.get('number'))
+		fromUnit  = cgi.escape(self.request.get('from_unit'))
+		toUnit = cgi.escape(self.request.get('to_unit'))
+		#get conversion factor from db
+		query = db.GqlQuery("SELECT * "
+                            "FROM ConversionFactor "
+                            "WHERE ANCESTOR IS :1 AND fromUnit=:2 AND toUnit=:3",
+                            conversionFactors_key(), fromUnit, toUnit)
+		value = None
+		if query.count()>=1:
+			factor = query[0].factor
+			value = float(number) * float(factor)
 		
-        template_values = {
-            'pastConversions': pastConversions,
-            'url': url,
-            'url_linktext': url_linktext,
-        }
-		
-        template = jinja_environment.get_template('index.html')
-        self.response.out.write(template.render(template_values))
-
+		template_values = {
+		  'pastConversions':pastConversions,
+		  'url':url,
+		  'url_linktext':url_linktext,
+		  'value':value,
+		  'number':number
+		}
+		template = jinja_environment.get_template('index.html')
+		self.response.out.write(template.render(template_values))
 class Converter(webapp2.RequestHandler):
 	def post(self):
 		
