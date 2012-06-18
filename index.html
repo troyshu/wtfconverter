@@ -18,11 +18,19 @@
 	
 	<form action="/convert" method="post">
 		<input type="text" name="number" id="input" value="{{ number }}">
-		<select name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
+		<select id="fromUnit" name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
           <option value="{{fromUnit}}">{{fromUnit}}</option> 
 		{% for fromUnit in fromUnitSet: %}
 		  
           <option value="{{fromUnit}}">{{fromUnit}}</option> 
+		{% endfor %}
+		</select>
+		to
+		<select name="toUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
+          <option value="{{toUnit}}">{{toUnit}}</option> 
+		{% for toUnit in toUnitSet: %}
+		  
+          <option value="{{toUnit}}">{{toUnit}}</option> 
 		{% endfor %}
 		</select>
 		
@@ -41,6 +49,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
   <script src="/js/chosen/chosen.jquery.min.js" type="text/javascript"></script>
   <script type="text/javascript"> $(".chzn-select").chosen();</script>
-  
+  <script type="text/javascript">
+	$(document).ready(function(){
+	  $("#fromUnit").focusout(function(){
+		console.log('focusout');
+	  });
+	});
+	</script>
   </body>
 </html>
