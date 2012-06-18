@@ -40,13 +40,18 @@ class MainPage(webapp2.RequestHandler):
         else:
             url = users.create_login_url(self.request.uri)
             url_linktext = 'Login' 
-
+		
+		#process GET vars to do actual conversion
+		#get relevant GET vars
+		#lookup conversion factor in table
+		#use conversion factor to convert, display to user
+		
         template_values = {
             'pastConversions': pastConversions,
             'url': url,
             'url_linktext': url_linktext,
         }
-
+		
         template = jinja_environment.get_template('index.html')
         self.response.out.write(template.render(template_values))
 

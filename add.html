@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+	<a href="{{ url }}">{{ url_linktext }}</a>
+	{% if auth==1 %}
+	<form action="/admin" method="post">
+		from unit: <input type="text" name="fromUnit" ><br>
+		to unit: <input type="text" name="toUnit" ><br>
+		factor: <input type="text" name="factor" ><br>
+		<input type="submit" value="Add" >
+	</form>
+	{% endif %}
+	
+
+  </body>
+</html>
