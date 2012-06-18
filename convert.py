@@ -32,8 +32,8 @@ def pastConversions_key():
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
-		query = PastConversion.all().ancestor(pastConversions_key()).order('-date')
-		pastConversions = query.fetch(10)
+		'''query = PastConversion.all().ancestor(pastConversions_key()).order('-date')
+		pastConversions = query.fetch(10)'''
 		
 		if users.get_current_user():
 			url = users.create_logout_url(self.request.uri)
@@ -41,6 +41,14 @@ class MainPage(webapp2.RequestHandler):
 		else:
 			url=users.create_login_url(self.request.uri)
 			url_linktext='Login'
+			
+		#get list of fromUnits from database
+		query = db.GqlQuery("select * from ConversionFactor where ancestor is :1",conversionFactors_key())
+		fromUnitSet = set([])
+		for row in query:
+			fromUnitSet.add(cgi.escape(row.fromUnit))
+		#print fromUnitSet #debug
+		
 			
 		#get relevant GET vars
 		number = cgi.escape(self.request.get('number'))
@@ -63,12 +71,13 @@ class MainPage(webapp2.RequestHandler):
 			toLongName = query[0].longName
 		
 		template_values = {
-		  'pastConversions':pastConversions,
 		  'url':url,
 		  'url_linktext':url_linktext,
 		  'value':value,
 		  'number':number,
-		  'toLongName':toLongName
+		  'toLongName':toLongName,
+		  'fromUnit':fromUnit,
+		  'fromUnitSet':fromUnitSet
 		}
 		template = jinja_environment.get_template('index.html')
 		self.response.out.write(template.render(template_values))

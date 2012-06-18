@@ -7,7 +7,10 @@ threadsafe: true
 handlers:
 - url: /css
   static_dir: css
-  
+- url: /js
+  static_dir: js
+- url: /js/chosen
+  static_dir: js/chosen 
 - url: /admin
   script: admin.app
 - url: /admin/.*

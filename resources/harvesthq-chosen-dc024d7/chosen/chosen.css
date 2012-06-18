@@ -1,59 +1,12 @@
-/*body {
-  font-family: Arial, Verdana, sans-serif;
-  background-color: white;
-  color:#444444;
-  font-size:80px;
-  text-align:center;
-}
-input#input {
-	color:#666666;
-	font-size:80px;
-	width:300px
-}
-input#button {
-	margin-top:30px;
-	color:black;
-	font-size:60px;
-}
-#answer {
-	margin-bottom:30px;
-	color:#333333;
-}
-
-#recentConversions {
-	font-size:0.15em;
-}
-*/
-
-body {
-	font-family:Arial,Verdana,sans-serif;
-	background-color:white;
-	color:#444444;
-	text-align:center;
-	
-}
-input#input {
-	color:#666666;
-	font-size:40px;
-	width:300px
-}
-input#button {
-	margin-top:30px;
-	color:black;
-	font-size:60px;
-}
-
 /* @group Base */
 .chzn-container {
-  font-size: 40px;
+  font-size: 13px;
   position: relative;
   display: inline-block;
-  text-align:left;
   zoom: 1;
   *display: inline;
 }
 .chzn-container .chzn-drop {
-  font-size:23px;
   background: #fff;
   border: 1px solid #aaa;
   border-top: 0;
@@ -92,10 +45,8 @@ input#button {
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  /*height: 23px;
-  line-height: 24px;*/
-  height:50px;
-  line-height:auto;
+  height: 23px;
+  line-height: 24px;
   padding: 0 0 0 8px;
   color: #444444;
   text-decoration: none;

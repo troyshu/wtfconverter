@@ -1,6 +1,7 @@
 <html>
   <head>
     <link type="text/css" rel="stylesheet" href="/css/main.css" />
+	
   </head>
   <body>
 	<!-- <a href="{{ url }}">{{ url_linktext }}</a> -->
@@ -16,8 +17,16 @@
 	
 	
 	<form action="/convert" method="post">
-		<input type="text" name="number" id="input" value="{{ number }}"> seconds<br>
-		<input type="submit" value="Convert it dude" id="button">
+		<input type="text" name="number" id="input" value="{{ number }}">
+		<select data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;" tabindex="1">
+          <option value=""></option> 
+		{% for fromUnit in fromUnitSet: %}
+		  
+          <option value="{{fromUnit}}">{{fromUnit}}</option> 
+		{% endfor %}
+		</select>
+		
+		<br><input type="submit" value="Convert it dude" id="button">
 	</form>
 	
 	<!--<div id="recentConversions">
@@ -29,7 +38,9 @@
     {% endfor %}
 	</div>-->
 
-    
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+  <script src="/js/chosen/chosen.jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript"> $(".chzn-select").chosen();</script>
+  
   </body>
 </html>
