@@ -19,12 +19,16 @@ class ConversionFactor(db.Model):
   toUnit = db.StringProperty()
   factor = db.FloatProperty()
   
-
+class UnitDescription(db.Model):
+	unitName = db.StringProperty()
+	longName = db.StringProperty()
+	description = db.StringProperty(multiline=True)
 
 def conversionFactors_key():
-  """Constructs a Datastore key for a PastConversions entity with guestbook_name."""
   return db.Key.from_path('ConversionFactors','default_conversionFactors')
-
+  
+def unitDescriptions_key():
+  return db.Key.from_path('UnitDescriptions','default_unitDescriptions')
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
@@ -62,6 +66,7 @@ class MainPage(webapp2.RequestHandler):
 		conversion.put()
 		
 		#also put in the inverse
+		'''
 		factor = 1/factor
 		temp = fromUnit
 		fromUnit = toUnit
@@ -71,10 +76,25 @@ class MainPage(webapp2.RequestHandler):
 		conversion.toUnit = toUnit
 		conversion.factor = factor
 		conversion.put()
+		'''
 		
 		print 'GREAT SUCCESS'
 		
 		self.redirect('/admin?' + urllib.urlencode({'status': '1'}))
 
-app = webapp2.WSGIApplication([('/admin', MainPage)],
-                              debug=True)
+class Admin2(webapp2.RequestHandler):
+	def post(self):
+		name = self.request.get('name')
+		longName = self.request.get('longName')
+		description = self.request.get('description')
+		
+		unitdescription = UnitDescription(parent=unitDescriptions_key())
+		unitdescription.unitName = name
+		unitdescription.longName = longName
+		unitdescription.description = description
+		unitdescription.put()
+		#print 'GREAT SUCCESS'
+		
+		self.redirect('/admin?' + urllib.urlencode({'status': '1'}))
+
+app = webapp2.WSGIApplication([('/admin', MainPage),('/admin/addDesc', Admin2)], debug=True)

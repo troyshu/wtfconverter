@@ -10,6 +10,8 @@ handlers:
   
 - url: /admin
   script: admin.app
+- url: /admin/.*
+  script: admin.app
 
 - url: /.*
   script: convert.app

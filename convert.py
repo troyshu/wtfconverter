@@ -55,13 +55,20 @@ class MainPage(webapp2.RequestHandler):
 		if query.count()>=1:
 			factor = query[0].factor
 			value = float(number) * float(factor)
+			
+		#get the long name of the toUnit
+		query = db.GqlQuery("select * from UnitDescription where ancestor is :1 and unitName=:2", unitDescriptions_key(), toUnit)
+		toLongName = None
+		if query.count()>=1:
+			toLongName = query[0].longName
 		
 		template_values = {
 		  'pastConversions':pastConversions,
 		  'url':url,
 		  'url_linktext':url_linktext,
 		  'value':value,
-		  'number':number
+		  'number':number,
+		  'toLongName':toLongName
 		}
 		template = jinja_environment.get_template('index.html')
 		self.response.out.write(template.render(template_values))
