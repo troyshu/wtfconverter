@@ -8,19 +8,20 @@
 	
 	<div id="answer">
 		{% if value: %}
+		{{ number }} {{fromUnit}}		
+		<br>
+		=>
+		<br>
 		{{ value }} {{toLongName}}
-		<br>
-		-->
-		<br>
 		{% endif %}
 	</div>
 	
 	
 	<form action="/convert" method="post">
-		<input type="text" name="number" id="input" value="{{ number }}">
+		<input type="text" name="number" id="input" value="">
 		<div id="fromUnitDiv">
 			<select id="fromUnit" name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
-			  <option value="{{fromUnit}}">{{fromUnit}}</option> 
+			  <option value=""></option> 
 			{% for fromUnit in fromUnitSet: %}
 			  
 			  <option value="{{fromUnit}}">{{fromUnit}}</option> 
