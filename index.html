@@ -27,6 +27,11 @@
 		{{ value }} {{toLongName}}
 		{% endif %}
 	</div>
+	<div id="unitDescription">
+	{%if unitDesc: %}
+		{{ unitDesc }}
+	{% endif %}
+	</div>
 	
 	{% if not toLongName: %}
 	<form action="/convert" method="post">

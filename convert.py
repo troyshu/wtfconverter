@@ -68,8 +68,10 @@ class MainPage(webapp2.RequestHandler):
 		#get the long name of the toUnit
 		query = db.GqlQuery("select * from UnitDescription where ancestor is :1 and unitName=:2", unitDescriptions_key(), toUnit)
 		toLongName = None
+		unitDesc = None
 		if query.count()>=1:
 			toLongName = query[0].longName
+			unitDesc = query[0].description
 		
 		template_values = {
 		  'url':url,
@@ -77,6 +79,7 @@ class MainPage(webapp2.RequestHandler):
 		  'value':value,
 		  'number':number,
 		  'toLongName':toLongName,
+		  'unitDesc':unitDesc,
 		  'fromUnit':fromUnit,
 		  'fromUnitSet':fromUnitSet
 		}
