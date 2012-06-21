@@ -45,6 +45,16 @@ input#button {
 #answer {
 	font-size:60px;
 	margin-bottom:30px;
+	color:#666666;
+}
+a#backlink {
+	color:#777777;
+	text-decoration:underline;
+	
+}
+
+a#backlink:hover{
+	text-decoration:none;
 	color:#333333;
 }
 

@@ -16,18 +16,18 @@
 		{% endif %}
 	</div>
 	
-	
+	{% if not toLongName: %}
 	<form action="/convert" method="post">
 		<input type="text" name="number" id="input" value="">
-		<div id="fromUnitDiv">
-			<select id="fromUnit" name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
-			  <option value=""></option> 
-			{% for fromUnit in fromUnitSet: %}
-			  
-			  <option value="{{fromUnit}}">{{fromUnit}}</option> 
-			{% endfor %}
-			</select>
-		</div>
+		
+		<select id="fromUnit" name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
+		  <option value=""></option> 
+		{% for fromUnit in fromUnitSet: %}
+		  
+		  <option value="{{fromUnit}}">{{fromUnit}}</option> 
+		{% endfor %}
+		</select>
+		
 		to
 
 		<select name="toUnit" id="toUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
@@ -35,6 +35,9 @@
 		
 		<br><input type="submit" value="Convert it dude" id="button">
 	</form>
+	{% else: %}
+	<a id = "backlink" href="/">&larr; Back to the converter, yo</a>
+	{% endif %}
 	
 	<!--<div id="recentConversions">
 	Recent conversions:<br>
