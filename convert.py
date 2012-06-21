@@ -8,6 +8,7 @@ from google.appengine.api import users
 
 import jinja2
 import os
+import json
 
 #custom
 from admin import *
@@ -109,8 +110,23 @@ class Converter(webapp2.RequestHandler):
 		
 		
 		self.redirect('/?' + urllib.urlencode({'number': number,'from_unit':fromUnit, 'to_unit':toUnit}))
-	
-	
+def echo(string):
+	return string
+class GetToUnits(webapp2.RequestHandler):
+	def post(self):
+		fromUnit = cgi.escape(self.request.get('fromUnit'))
+		
+		query = db.GqlQuery("SELECT * "
+                            "FROM ConversionFactor "
+                            "WHERE ANCESTOR IS :1 AND fromUnit=:2",
+                            conversionFactors_key(), fromUnit)
+		toUnitSet = set([])
+		for row in query:
+			toUnitSet.add(cgi.escape(row.toUnit))
+		toUnitSet = list(toUnitSet)
+		self.response.out.write(json.dumps(toUnitSet)) #diagnostic
+		
 app = webapp2.WSGIApplication([('/', MainPage),
-                               ('/convert', Converter)],
+                               ('/convert', Converter),
+							   ('/getToUnits', GetToUnits)],
                               debug=True)

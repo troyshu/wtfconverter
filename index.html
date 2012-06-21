@@ -18,21 +18,24 @@
 	
 	<form action="/convert" method="post">
 		<input type="text" name="number" id="input" value="{{ number }}">
-		<select id="fromUnit" name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
-          <option value="{{fromUnit}}">{{fromUnit}}</option> 
-		{% for fromUnit in fromUnitSet: %}
-		  
-          <option value="{{fromUnit}}">{{fromUnit}}</option> 
-		{% endfor %}
-		</select>
+		<div id="fromUnitDiv">
+			<select id="fromUnit" name="fromUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
+			  <option value="{{fromUnit}}">{{fromUnit}}</option> 
+			{% for fromUnit in fromUnitSet: %}
+			  
+			  <option value="{{fromUnit}}">{{fromUnit}}</option> 
+			{% endfor %}
+			</select>
+		</div>
 		to
-		<select name="toUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
+		<select name="toUnit" id="toUnit" data-placeholder="Choose a unit..." class="chzn-select" style="width:350px;">
           <option value="{{toUnit}}">{{toUnit}}</option> 
 		{% for toUnit in toUnitSet: %}
 		  
           <option value="{{toUnit}}">{{toUnit}}</option> 
 		{% endfor %}
 		</select>
+		
 		
 		<br><input type="submit" value="Convert it dude" id="button">
 	</form>
@@ -51,8 +54,20 @@
   <script type="text/javascript"> $(".chzn-select").chosen();</script>
   <script type="text/javascript">
 	$(document).ready(function(){
-	  $("#fromUnit").focusout(function(){
-		console.log('focusout');
+
+	  $("#fromUnit").change(function(){
+		console.log('from unit changed');
+		//ajax post
+		$.post("/getToUnits", { fromUnit: $("#fromUnit").val()},
+		   function(data) {
+			 jsonData = jQuery.parseJSON(data);
+			 options = '';
+			 for (var i=0; i<jsonData.length; i++) {
+				options+= '<option value="'+jsonData[i]+'">'+jsonData[i]+'</option>'
+			 }
+			 //console.log(options);
+			 $("select#toUnit").html(options); //works for regular select boxes, but not for the special one...
+		   });
 	  });
 	});
 	</script>
