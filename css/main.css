@@ -57,6 +57,23 @@ a#backlink:hover{
 	text-decoration:none;
 	color:#333333;
 }
+#footer {
+	margin-top:100px;
+	clear:both;
+	font-size:12px;
+}
+#footer li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 30px;
+}
+
+#footer li a{
+	color:#BBBBBB;
+}
+#footer li a:hover{
+	color:#666666;
+}
 
 /* @group Base */
 .chzn-container {
