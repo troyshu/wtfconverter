@@ -94,11 +94,15 @@ class Converter(webapp2.RequestHandler):
 		# the same entity group. Queries across the single entity group will be
 		# consistent. However, the write rate to a single entity group should
 		# be limited to ~1/second.
-		
-		number = float(cgi.escape(self.request.get('number')))
+		try:
+			number = float(cgi.escape(self.request.get('number')))
+		except ValueError:
+			self.redirect('/?')
+			return
 		#TODO: add checker to make sure nothing but floats entered.
 		fromUnit = cgi.escape(self.request.get('fromUnit'))
 		toUnit = cgi.escape(self.request.get('toUnit'))
+		#should also return if no units are selected
 		
 		conversion = PastConversion(parent=pastConversions_key())
 		if users.get_current_user():
