@@ -46,9 +46,13 @@ input#button {
 	color:#777777;
 	margin-bottom:30px;
 	font-size:14px;
+	margin-left:150px;
+	margin-right:150px;
 }
 #answer {
 	font-size:60px;
+	margin-left:50px;
+	margin-right:50px;
 	margin-bottom:30px;
 	margin-top:30px;
 	color:#666666;
